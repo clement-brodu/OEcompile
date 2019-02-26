@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<project name="Build-ProductA" basedir="." >
+  <taskdef resource="PCT.properties" />
+  <typedef resource="types.properties" />
+  
+ 
+	
+  <target name="frmk" >
+    
+    <PCTCompile graphicalMode="true" 
+			destDir="${basedir}/Framework/Rcode" 
+			multicompile="true"
+			dlcHome="${DLC}" 
+			failOnError="false" >
+      <fileset dir="${basedir}/Framework/Src" includes="**/*.cls" />
+      <propath>
+        <pathelement location="${basedir}/Framework/Rcode" />
+        <pathelement location="${basedir}/Framework/Src" />
+      </propath>    
+    </PCTCompile>
+    
+  </target>
+	
+	
+  <target name="build" depends="frmk" >
+
+    <PCTCompile graphicalMode="true" 
+			destDir="${basedir}/ProductA/Rcode" 
+			multicompile="true"
+			dlcHome="${DLC}" 
+			failOnError="false" >
+      <fileset dir="${basedir}/ProductA/Src" includes="**/*.cls" />
+      <propath>
+      	<pathelement location="${basedir}/ProductA/Src" />
+      	<pathelement location="${basedir}/Framework/Rcode" />
+      	<pathelement location="${basedir}/Framework/Src" />
+      </propath>	
+    </PCTCompile>
+    
+  </target>
+  
+  <target name="clean"  >
+		<delete includeemptydirs="true" failonerror="false" >
+			<fileset dir="${basedir}/Framework/Rcode" includes="**/*.r"/>
+			<fileset dir="${basedir}/ProductA/Rcode" includes="**/*.r"/>
+		</delete>
+  </target>
+  
+</project>
